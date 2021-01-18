@@ -1,0 +1,7 @@
+numpy==1.19.5
+librosa==0.8.0
+pydub==0.24.1
+joblib==1.0.0
+streamlit==0.74.1
+matplotlib==3.3.3
+Pillow=8.1.1
