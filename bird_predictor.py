@@ -59,20 +59,21 @@ model = load_model()
 song = st.file_uploader("Upload an mp3: ", type=['mp3'])
 
 if song is not None:
-    song_file = AudioSegment.from_mp3(song)
-    path = './' + song.name
-    song_file.export(path, format='mp3')
+    if st.button("What's my bird?"):
+        song_file = AudioSegment.from_mp3(song)
+        path = './' + song.name
+        song_file.export(path, format='mp3')
 
-    audio, sample_rate = librosa.load(path, sr=8000, res_type='kaiser_fast')
-    prediction = make_prediction(audio)
-    st.write('We think ' + song.name + ' is the call of the ' + '***' + num_dict[str(prediction)]+ '***')
+        audio, sample_rate = librosa.load(path, sr=8000, res_type='kaiser_fast')
+        prediction = make_prediction(audio)
+        st.write('We think ' + song.name + ' is the call of the ' + '***' + num_dict[str(prediction)]+ '***')
 
     
-    play_song(path)
-    pressed = st.checkbox('Show Spectrogram?')
-    if pressed:
-        fig = display_spect(audio)
-        st.pyplot(fig)
-    show_bird(prediction)
+        play_song(path)
+        pressed = st.checkbox('Show Spectrogram?')
+        if pressed:
+            fig = display_spect(audio)
+            st.pyplot(fig)
+        show_bird(prediction)
 
-    os.remove(path)
+        os.remove(path)
