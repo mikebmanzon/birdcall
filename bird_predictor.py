@@ -58,6 +58,9 @@ model = load_model()
 
 song = st.file_uploader("Upload an mp3: ", type=['mp3'])
 
+spect_is_pressed = st.checkbox("Show Spectrogram?")
+
+
 if song is not None:
     if st.button("What's my bird?"):
         song_file = AudioSegment.from_mp3(song)
@@ -70,8 +73,8 @@ if song is not None:
 
     
         play_song(path)
-        pressed = st.checkbox('Show Spectrogram?')
-        if pressed:
+        # pressed = st.checkbox('Show Spectrogram?')
+        if spect_is_pressed:
             fig = display_spect(audio)
             st.pyplot(fig)
         show_bird(prediction)
