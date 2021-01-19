@@ -26,7 +26,6 @@ def extract_features(audio):
 
     return mfccs_processed
 
-@st.cache
 def make_prediction(song):
     data = extract_features(song)
     prediction = model.predict([data])[0]
