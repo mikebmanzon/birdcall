@@ -91,12 +91,13 @@ model = load_model()
 song = st.file_uploader("Upload an mp3: ", type=['mp3'])
 
 if song is not None:
-    spect_is_pressed = st.checkbox("Show Spectrogram?")
+    # spect_is_pressed = st.checkbox("Show Spectrogram?")
+    
+    song_file = AudioSegment.from_mp3(song)
+    path = './' + song.name
+    play_song(path)
     
     if st.button("What's my bird?"):
-        # saves temporary mp3 copy
-        song_file = AudioSegment.from_mp3(song)
-        path = './' + song.name
         song_file.export(path, format='mp3')
         
         # loads librosa audio,and makes prediction
@@ -104,16 +105,12 @@ if song is not None:
         prediction = make_prediction(audio)
         st.write('We think ' + song.name + ' is the call of the ' + '***' + num_dict[str(prediction)]+ '***')
 
-        # displays audioplayer
-        play_song(path)
-        
-        # displays spectrogram if box is checked
-        if spect_is_pressed:
-            fig = display_spect(audio)
-            st.pyplot(fig)
-
         # displays image of bird
         show_bird(prediction)
         
         # removes temp bird file
         os.remove(path)
+
+    if spect_is_pressed:
+        fig = display_spect(audio)
+        st.pyplot(fig)
