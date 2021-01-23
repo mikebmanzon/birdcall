@@ -90,6 +90,8 @@ model = load_model()
 
 song = st.file_uploader("Upload an mp3: ", type=['mp3'])
 
+spect_is_pressed = st.checkbox("Show Spectrogram?")
+
 if song is not None:
     # spect_is_pressed = st.checkbox("Show Spectrogram?")
     
