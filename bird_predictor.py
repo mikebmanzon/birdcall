@@ -98,11 +98,11 @@ if song is not None:
     song_file = AudioSegment.from_mp3(song)
     path = './' + song.name
     song_file.export(path, format='mp3')
+    audio, sample_rate = librosa.load(path, sr=8000, res_type='kaiser_fast') 
     play_song(path)
     
     if st.button("What's my bird?"):
         # loads librosa audio,and makes prediction
-        audio, sample_rate = librosa.load(path, sr=8000, res_type='kaiser_fast')
         prediction = make_prediction(audio)
         st.write('We think ' + song.name + ' is the call of the ' + '***' + num_dict[str(prediction)]+ '***')
 
