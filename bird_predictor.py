@@ -22,12 +22,12 @@ N_MFCC = 40
 pic_dict = {str(i): './images/' + num_dict[str(i)] + '.jpg' for i in range(264)}
 
 @st.cache
-def load_model():
+def load_model(model_name):
     """
     Parameter: None
     Returns: prediction Model
     """
-    model = joblib.load('bird_model.pkl')
+    model = joblib.load(model_name)
     return model
 
 def extract_features(audio):
@@ -85,12 +85,10 @@ def show_bird(prediction):
 st.title("Birdcall Identifier")
 st.header("Trained on over 21,000 audio files, I'll classify your birdcall into one of 263 species.")
 
-# loads scikit-learn model
-model = load_model()
+# loads stored cikit-learn model
+model = load_model('bird_model.pkl')
 
 song = st.file_uploader("Upload an mp3: ", type=['mp3'])
-
-spect_is_pressed = st.checkbox("Show Spectrogram?")
 
 if song is not None:
     # exports temp mp3
