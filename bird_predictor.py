@@ -93,8 +93,6 @@ song = st.file_uploader("Upload an mp3: ", type=['mp3'])
 spect_is_pressed = st.checkbox("Show Spectrogram?")
 
 if song is not None:
-    # spect_is_pressed = st.checkbox("Show Spectrogram?")
-    
     song_file = AudioSegment.from_mp3(song)
     path = './' + song.name
     song_file.export(path, format='mp3')
@@ -105,13 +103,10 @@ if song is not None:
         # loads librosa audio,and makes prediction
         prediction = make_prediction(audio)
         st.write('We think ' + song.name + ' is the call of the ' + '***' + num_dict[str(prediction)]+ '***')
-
+        data = extract_features(audio)
+        st.write(model.predict_proba([data])[:5])
         # displays image of bird
         show_bird(prediction)
         
         # removes temp bird file
         os.remove(path)
-
-    if spect_is_pressed:
-        fig = display_spect(audio)
-        st.pyplot(fig)
