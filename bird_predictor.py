@@ -93,18 +93,22 @@ song = st.file_uploader("Upload an mp3: ", type=['mp3'])
 spect_is_pressed = st.checkbox("Show Spectrogram?")
 
 if song is not None:
+    # exports temp mp3
     song_file = AudioSegment.from_mp3(song)
     path = './' + song.name
     song_file.export(path, format='mp3')
+
+    # loads librosa audio
     audio, sample_rate = librosa.load(path, sr=8000, res_type='kaiser_fast') 
+
+    # displays audio player
     play_song(path)
     
     if st.button("What's my bird?"):
         # loads librosa audio,and makes prediction
         prediction = make_prediction(audio)
         st.write('We think ' + song.name + ' is the call of the ' + '***' + num_dict[str(prediction)]+ '***')
-        data = extract_features(audio)
-        st.write(model.predict_proba([data])[:5])
+        
         # displays image of bird
         show_bird(prediction)
         
